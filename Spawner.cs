@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemy;
+    [SerializeField] private Enemy _template;
     [SerializeField] private float _spawnDelay;
     [SerializeField] private List<Transform> _spawnPositions;
 
@@ -17,11 +17,13 @@ public class Spawner : MonoBehaviour
     {
         while (true)
         {
+            var waitForSeconds = new WaitForSeconds(_spawnDelay);
+
             var positionIndex = Random.Range(0, _spawnPositions.Count);
 
-            Instantiate(_enemy, _spawnPositions[positionIndex].transform.position, Quaternion.identity);
+            Instantiate(_template, _spawnPositions[positionIndex].transform.position, Quaternion.identity);
 
-            yield return new WaitForSeconds(_spawnDelay);
+            yield return waitForSeconds;
         }
     }
 }
